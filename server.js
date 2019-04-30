@@ -65,9 +65,24 @@ app.get('/', function(req, res){
 })
 
 //Twitter webhook用URL
-app.get('webhook/twitter', function(req,res){
-  res.send('Twitter webfook URL page')
+var crypto = require('crypto');
+
+app.get('/webhook/twitter', function(req,res){
+  var crc_token = req.query.crc_token;
+  if(!crc_token){
+    res.send('Error: crc_token missing from request.')
+  }else{
+    var signature = crypto.createHmac('sha256', process.env['CONSUMER_SECRET']).update(crc_token).digest('base64')
+
+    console.log('recieve crc check. token=${crc_token} res=${signature}')
+    res.satus(200);
+    // res.json({response_token: 'sha256=${signature}'})
+    res.send({
+      response_token: 'sha256=' + signature
+    })
+  }
 })
+
 app.listen(app.get('poet'), function(){
   console.log("Node app is running at localhost:" + app.get('port'))
 })
