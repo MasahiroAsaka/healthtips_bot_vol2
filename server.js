@@ -22,10 +22,10 @@ new CronJob({
 
 //MySQL in Appデータベースの接続詞
 var connectionString = process.env.MYSQLCONNSTR_localdb;
-var host = /Data Source=([0-9¥.]+)¥:[0-9]+¥;/g.exec(connectionString)[1];
-var port = /Data Source=[0-9¥.]+¥:([0-9]+)¥;/g.exec(connectionString)[1];
-var database = /Database=([0-9a-zA-Z]+)¥;/g.exec(connectionString)[1];
-var username = /User Id=([a-zA-z0-9¥s]+)¥;/g.exec(connectionString)[1];
+var host = /Data Source=([0-9\.]+)\:[0-9]+\;/g.exec(connectionString)[1];
+var port = /Data Source=[0-9\.]+\:([0-9]+)\;/g.exec(connectionString)[1];
+var database = /Database=([0-9a-zA-Z]+)\;/g.exec(connectionString)[1];
+var username = /User Id=([a-zA-z0-9\s]+)\;/g.exec(connectionString)[1];
 var password = /Password=(.*)/g.exec(connectionString)[1];
 
 var exampleSql = "";
